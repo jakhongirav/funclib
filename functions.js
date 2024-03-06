@@ -40,3 +40,31 @@ function isNarcissistic(value) {
   //* Check if the original value is equal to the sum
   return value === sum;
 }
+//! The algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+function moveZeros(arr) {
+  const nuls = arr.filter((item) => item === 0);
+  const others = arr.filter((item) => item !== 0);
+  //? concat() используется для обьединения двух или более массивов
+  return others.concat(nuls);
+}
+
+//! The algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+//? This version of the algorithm avoids using additional arrays and the filter() method, instead opting for a more efficient in-place approach. It iterates through the array once, moving non-zero elements to the front, and then fills the remaining elements with zeros. This approach has a time complexity of O(n) and does not require creating new arrays, making it more efficient in terms of memory usage and runtime performance.
+function moveZeroSecond(arr) {
+  let nonZeroIndex = 0;
+
+  //* Iterate through the array, moving non-zero elements to the front
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== 0) {
+      arr[nonZeroIndex++] = arr[i];
+    }
+  }
+
+  //* Fill the remaining elements with zeros
+  for (let i = nonZeroIndex; i < arr.length; i++) {
+    arr[i] = 0;
+  }
+
+  return arr;
+}
+// console.log(moveZeroSecond([false, 1, 0, 1, 2, 0, 1, 3, "a"]));
