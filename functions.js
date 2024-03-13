@@ -10,6 +10,8 @@ function twoLetterMaker(str) {
   return result;
 }
 
+// console.log(twoLetterMaker("abs"));
+
 //! Define If armstrong number or not
 function narcissistic(value) {
   const nums = value.toString().split("").map(Number);
@@ -68,3 +70,28 @@ function moveZeroSecond(arr) {
   return arr;
 }
 // console.log(moveZeroSecond([false, 1, 0, 1, 2, 0, 1, 3, "a"]));
+
+//! The main idea is to count all the occurring characters in a string. If you have a string like aba, then the result should be {'a': 2, 'b': 1}.
+//! What if the string is empty? Then the result should be empty object literal, {}.
+function count(str) {
+  const charCount = {};
+
+  //? Iterate through each character in the string
+  for (let char of str) {
+    //? Increment the count for the current character
+    charCount[char] = (charCount[char] || 0) + 1;
+  }
+
+  return charCount;
+}
+//! Here the same function using reduce array method.
+function countSecond(str) {
+  return str.split("").reduce((charCount, char) => {
+    charCount[char] = (charCount[char] || 0) + 1;
+    return charCount;
+  }, {});
+}
+
+// Test cases
+console.log(countSecond("ababdasds")); // Output: { 'a': 2, 'b': 1 }
+console.log(count("")); // Output: {}
