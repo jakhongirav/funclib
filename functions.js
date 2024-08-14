@@ -158,4 +158,21 @@ function RomNum2(number) {
   return roman;
 }
 
-console.log(RomNum(num));
+// console.log(RomNum(num));
+
+const arr = [1, 2, 3];
+
+function duplicateFinder(arr) {
+  const seen = new Set();
+
+  for (let num of arr) {
+      if (seen.has(num)) {
+          return true;
+      }
+      seen.add(num);
+  }
+
+  return false;
+}
+
+console.log(duplicateFinder(arr));
