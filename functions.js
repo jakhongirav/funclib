@@ -160,7 +160,7 @@ function RomNum2(number) {
 
 // console.log(RomNum(num));
 
-const arr = [1, 2, 3];
+// const arr = [1, 2, 3];
 
 function duplicateFinder(arr) {
   const seen = new Set();
@@ -175,4 +175,32 @@ function duplicateFinder(arr) {
   return false;
 }
 
-console.log(duplicateFinder(arr));
+// console.log(duplicateFinder(arr));
+
+const nums = [1,2,3,1];
+
+function checkNeighborhoodDuplicates(nums, k) {
+  // Create a map to store the last index of each post
+  const indexMap = new Map();
+
+  for (let i = 0; i < nums.length; i++) {
+    const num = nums[i];
+
+    if (indexMap.has(num)) {
+      // Check if the previous occurrence is within distance k
+      const previousIndex = indexMap.get(num);
+      if (i - previousIndex <= k) {
+        return true;
+      }
+    }
+
+    // Update the map with the current index
+    indexMap.set(num, i);
+  }
+
+  return false;
+}
+
+
+console.log(checkNeighborhoodDuplicates(nums, 1));
+
