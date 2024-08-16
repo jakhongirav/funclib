@@ -177,7 +177,7 @@ function duplicateFinder(arr) {
 
 // console.log(duplicateFinder(arr));
 
-const nums = [1,2,3,1];
+// const nums = [1,2,3,1];
 
 function checkNeighborhoodDuplicates(nums, k) {
   // Create a map to store the last index of each post
@@ -202,5 +202,8 @@ function checkNeighborhoodDuplicates(nums, k) {
 }
 
 
-console.log(checkNeighborhoodDuplicates(nums, 1));
+// console.log(checkNeighborhoodDuplicates(nums, 1));
+
+
+
 
