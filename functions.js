@@ -204,6 +204,29 @@ function checkNeighborhoodDuplicates(nums, k) {
 
 // console.log(checkNeighborhoodDuplicates(nums, 1));
 
+//! Shuffle array function
+function shuffleArray(array) {
+  // Loop over the array from the last element to the first
+  for (let i = array.length - 1; i > 0; i--) {
+      // Generate a random index between 0 and the current index
+      const j = Math.floor(Math.random() * (i + 1));
+
+      // Swap the current element with the element at the random index
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+}
+
+// Example array
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// Shuffle the array
+const shuffledArr = shuffleArray(arr);
+
+console.log(shuffledArr);
+// Outputs the array in a random order, e.g., [7, 1, 4, 10, 2, 8, 5, 6, 9, 3]
+
 
 
 
