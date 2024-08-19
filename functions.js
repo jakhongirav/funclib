@@ -224,8 +224,82 @@ const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 // Shuffle the array
 const shuffledArr = shuffleArray(arr);
 
-console.log(shuffledArr);
+// console.log(shuffledArr);
 // Outputs the array in a random order, e.g., [7, 1, 4, 10, 2, 8, 5, 6, 9, 3]
+
+//! Generate password function
+//? This function will allow you to specify the length of the password, and whether to include lowercase letters, uppercase letters, numbers, and special characters.
+function generatePassword(options) {
+  const {
+      length = 12,
+      useLowercase = true,
+      useUppercase = true,
+      useNumbers = true,
+      useSpecialChars = true,
+  } = options;
+
+  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numberChars = '0123456789';
+  const specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+  let allChars = '';
+  let password = '';
+
+  if (useLowercase) allChars += lowercaseChars;
+  if (useUppercase) allChars += uppercaseChars;
+  if (useNumbers) allChars += numberChars;
+  if (useSpecialChars) allChars += specialChars;
+
+  if (allChars.length === 0) {
+      throw new Error('At least one character type must be selected.');
+  }
+
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * allChars.length);
+      password += allChars[randomIndex];
+  }
+
+  return password;
+}
+
+// Example 1: Generate a password with all character types
+const options1 = {
+  length: 16,
+  useLowercase: true,
+  useUppercase: true,
+  useNumbers: true,
+  useSpecialChars: true
+};
+const password1 = generatePassword(options1);
+// console.log(password1); 
+// Outputs a 16-character password like "aB3$dF7&Gh9@K2lM"
+
+// Example 2: Generate a password with only lowercase and numbers
+const options2 = {
+  length: 12,
+  useLowercase: true,
+  useUppercase: false,
+  useNumbers: true,
+  useSpecialChars: false
+};
+const password2 = generatePassword(options2);
+// console.log(password2); 
+// Outputs a 12-character password like "a4g7k9j2m1n0"
+
+// Example 3: Generate a password with only special characters
+const options3 = {
+  length: 8,
+  useLowercase: false,
+  useUppercase: false,
+  useNumbers: false,
+  useSpecialChars: true
+};
+const password3 = generatePassword(options3);
+// console.log(password3); 
+// Outputs an 8-character password like "@$&*#^!%"
+
+
 
 
 
