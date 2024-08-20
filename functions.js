@@ -299,6 +299,120 @@ const password3 = generatePassword(options3);
 // console.log(password3); 
 // Outputs an 8-character password like "@$&*#^!%"
 
+//! Checks for validity of the password, returns a detailed report
+function validatePassword(password) {
+  const minLength = 8;
+  const maxLength = 20;
+  const lowercaseRegex = /[a-z]/;
+  const uppercaseRegex = /[A-Z]/;
+  const numberRegex = /\d/;
+  const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  const commonPatterns = ['123456', 'password', 'qwerty', 'abc123'];
+
+  let report = {
+      isValid: true,
+      errors: [],
+      strengths: []
+  };
+
+  // Check length
+  if (password.length < minLength) {
+      report.isValid = false;
+      report.errors.push(`Password is too short. Minimum length is ${minLength} characters.`);
+  } else if (password.length > maxLength) {
+      report.isValid = false;
+      report.errors.push(`Password is too long. Maximum length is ${maxLength} characters.`);
+  } else {
+      report.strengths.push(`Password length is within the recommended range.`);
+  }
+
+  // Check for lowercase letters
+  if (!lowercaseRegex.test(password)) {
+      report.isValid = false;
+      report.errors.push("Password must contain at least one lowercase letter.");
+  } else {
+      report.strengths.push("Password contains lowercase letters.");
+  }
+
+  // Check for uppercase letters
+  if (!uppercaseRegex.test(password)) {
+      report.isValid = false;
+      report.errors.push("Password must contain at least one uppercase letter.");
+  } else {
+      report.strengths.push("Password contains uppercase letters.");
+  }
+
+  // Check for numbers
+  if (!numberRegex.test(password)) {
+      report.isValid = false;
+      report.errors.push("Password must contain at least one number.");
+  } else {
+      report.strengths.push("Password contains numbers.");
+  }
+
+  // Check for special characters
+  if (!specialCharRegex.test(password)) {
+      report.isValid = false;
+      report.errors.push("Password must contain at least one special character.");
+  } else {
+      report.strengths.push("Password contains special characters.");
+  }
+
+  // Check for common patterns
+  for (const pattern of commonPatterns) {
+      if (password.includes(pattern)) {
+          report.isValid = false;
+          report.errors.push(`Password contains a common pattern: "${pattern}".`);
+          break;
+      }
+  }
+
+  // Check for sequences (e.g., "abc", "123")
+  const sequenceRegex = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i;
+  if (sequenceRegex.test(password)) {
+      report.isValid = false;
+      report.errors.push("Password contains a simple sequence of characters.");
+  }
+
+  return report;
+}
+
+// Example 1: Validate a strong password
+// const password1 = "Str0ng@2024!";
+// const result1 = validatePassword(password1);
+// console.log(result1);
+/*
+{
+    isValid: true,
+    errors: [],
+    strengths: [
+        "Password length is within the recommended range.",
+        "Password contains lowercase letters.",
+        "Password contains uppercase letters.",
+        "Password contains numbers.",
+        "Password contains special characters."
+    ]
+}
+*/
+
+// Example 2: Validate a weak password
+// const password2 = "123456";
+// const result2 = validatePassword(password2);
+// console.log(result2);
+/*
+{
+    isValid: false,
+    errors: [
+        "Password is too short. Minimum length is 8 characters.",
+        "Password must contain at least one lowercase letter.",
+        "Password must contain at least one uppercase letter.",
+        "Password must contain at least one special character.",
+        "Password contains a common pattern: \"123456\"."
+    ],
+    strengths: []
+}
+*/
+
 
 
 
