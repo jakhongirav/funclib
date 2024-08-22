@@ -413,8 +413,70 @@ function validatePassword(password) {
 }
 */
 
+//! JavaScript function that performs deep cloning of an object. This function will handle complex objects, including nested objects, arrays, and even objects with circular references. Deep cloning is an essential technique when you need to create a true copy of an object without referencing the original.
+function deepClone(obj, hash = new WeakMap()) {
+  // Handle null or undefined
+  if (obj === null || obj === undefined) return obj;
 
+  // Handle primitive data types (string, number, boolean, etc.)
+  if (typeof obj !== "object") return obj;
 
+  // Handle Date objects
+  if (obj instanceof Date) return new Date(obj);
 
+  // Handle Array objects
+  if (Array.isArray(obj)) {
+      const arrCopy = [];
+      obj.forEach((item, index) => {
+          arrCopy[index] = deepClone(item, hash);
+      });
+      return arrCopy;
+  }
 
+  // Handle RegExp objects
+  if (obj instanceof RegExp) return new RegExp(obj);
 
+  // Handle circular references by using WeakMap
+  if (hash.has(obj)) return hash.get(obj);
+
+  // Handle all other objects
+  const clonedObj = Object.create(Object.getPrototypeOf(obj));
+  hash.set(obj, clonedObj);
+
+  for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          clonedObj[key] = deepClone(obj[key], hash);
+      }
+  }
+
+  return clonedObj;
+}
+
+// Example 1: Deep cloning a simple object
+const originalObj = {
+  name: "Alice",
+  age: 30,
+  hobbies: ["reading", "cycling"],
+  details: {
+      married: true,
+      children: 2
+  }
+};
+
+const clonedObj = deepClone(originalObj);
+// console.log(clonedObj); 
+//? Deep clone of originalObj
+// console.log(clonedObj === originalObj);
+ //? false (different references)
+// console.log(clonedObj.details === originalObj.details);
+ //? false (different references)
+
+//? Example 2: Deep cloning an object with circular references
+const circularObj = {};
+circularObj.self = circularObj;
+
+const clonedCircularObj = deepClone(circularObj);
+// console.log(clonedCircularObj); 
+//? Should show an object with a self-reference
+// console.log(clonedCircularObj.self === clonedCircularObj); 
+//? true (the clone maintains the circular reference)
