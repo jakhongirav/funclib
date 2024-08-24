@@ -480,3 +480,50 @@ const clonedCircularObj = deepClone(circularObj);
 //? Should show an object with a self-reference
 // console.log(clonedCircularObj.self === clonedCircularObj); 
 //? true (the clone maintains the circular reference)
+
+
+//! JavaScript function that flattens a deeply nested array. This function will take an array that may contain nested arrays at various levels and return a new array with all elements flattened into a single level. Additionally, the function will allow you to specify the depth of flattening.
+function flattenArray(arr, depth = Infinity) {
+  const result = [];
+
+  // Helper function to recursively flatten the array
+  function flatten(currentArr, currentDepth) {
+      for (let i = 0; i < currentArr.length; i++) {
+          const item = currentArr[i];
+
+          // If the item is an array and the current depth is less than the specified depth
+          if (Array.isArray(item) && currentDepth < depth) {
+              flatten(item, currentDepth + 1); // Recursively flatten the nested array
+          } else {
+              result.push(item); // Push non-array elements or when depth limit is reached
+          }
+      }
+  }
+
+  flatten(arr, 0); // Start flattening from depth 0
+  return result;
+}
+
+// Example 1: Completely flattening a deeply nested array
+const nestedArray1 = [1, [2, [3, [4, [5]]]], 6];
+const flattened1 = flattenArray(nestedArray1);
+// console.log(flattened1); 
+//? Output: [1, 2, 3, 4, 5, 6]
+
+// Example 2: Flattening to a specified depth
+const nestedArray2 = [1, [2, [3, [4, [5]]]], 6];
+const flattened2 = flattenArray(nestedArray2, 2);
+// console.log(flattened2); 
+//? Output: [1, 2, 3, [4, [5]], 6]
+
+// Example 3: Flattening a simple array with no nested arrays
+const simpleArray = [1, 2, 3, 4, 5];
+const flattened3 = flattenArray(simpleArray);
+// console.log(flattened3); 
+//? Output: [1, 2, 3, 4, 5]
+
+// Example 4: Flattening an array with mixed data types
+const mixedArray = [1, ['a', [true, [null]], {}], 42];
+const flattened4 = flattenArray(mixedArray);
+// console.log(flattened4); 
+//? Output: [1, 'a', true, null, {}, 42]
