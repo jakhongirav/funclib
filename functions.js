@@ -527,3 +527,65 @@ const mixedArray = [1, ['a', [true, [null]], {}], 42];
 const flattened4 = flattenArray(mixedArray);
 // console.log(flattened4); 
 //? Output: [1, 'a', true, null, {}, 42]
+
+
+//! The Levenshtein distance is a measure of the difference between two sequences, defined as the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one word into the other. This function is useful in applications like spell checkers, DNA sequence analysis, or any scenario where you need to compare the similarity between two strings.
+function levenshteinDistance(str1, str2) {
+  const len1 = str1.length;
+  const len2 = str2.length;
+
+  // Create a 2D array to hold the distances
+  const dp = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0));
+
+  // Initialize the base cases
+  for (let i = 0; i <= len1; i++) dp[i][0] = i;
+  for (let j = 0; j <= len2; j++) dp[0][j] = j;
+
+  // Fill the DP table
+  for (let i = 1; i <= len1; i++) {
+      for (let j = 1; j <= len2; j++) {
+          if (str1[i - 1] === str2[j - 1]) {
+              dp[i][j] = dp[i - 1][j - 1]; // Characters match, no edit needed
+          } else {
+              dp[i][j] = Math.min(
+                  dp[i - 1][j] + 1,    // Deletion
+                  dp[i][j - 1] + 1,    // Insertion
+                  dp[i - 1][j - 1] + 1 // Substitution
+              );
+          }
+      }
+  }
+
+  // Return the Levenshtein distance
+  return dp[len1][len2];
+}
+
+// Example 1: Comparing similar strings
+const str1 = "kitten";
+const str2 = "sitting";
+const distance1 = levenshteinDistance(str1, str2);
+// console.log(distance1);
+ //? Output: 3
+
+// Example 2: Comparing identical strings
+const str3 = "flaw";
+const str4 = "flaw";
+const distance2 = levenshteinDistance(str3, str4);
+// console.log(distance2);
+ //? Output: 0
+
+// Example 3: Comparing completely different strings
+const str5 = "book";
+const str6 = "back";
+const distance3 = levenshteinDistance(str5, str6);
+// console.log(distance3);
+ //? Output: 2
+
+// Example 4: Comparing an empty string with a non-empty string
+const str7 = "";
+const str8 = "openai";
+const distance4 = levenshteinDistance(str7, str8);
+// console.log(distance4);
+ //? Output: 6
+
+
