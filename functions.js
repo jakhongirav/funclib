@@ -588,4 +588,61 @@ const distance4 = levenshteinDistance(str7, str8);
 // console.log(distance4);
  //? Output: 6
 
+//! JavaScript function that generates all possible permutations of a given string. This function will return an array containing every possible rearrangement of the string's characters. This type of function is useful in scenarios like generating anagrams, solving combinatorial problems, or exploring all possible outcomes in a string-based puzzle.
+function generatePermutations(str) {
+  const results = [];
+
+  // Base case: if the string is empty or contains a single character, return it as the only permutation
+  if (str.length <= 1) {
+      return [str];
+  }
+
+  // Recursive case: iterate through each character in the string
+  for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+
+      // Avoid generating duplicate permutations
+      if (str.indexOf(char) !== i) {
+          continue;
+      }
+
+      // Generate permutations of the remaining characters
+      const remainingChars = str.slice(0, i) + str.slice(i + 1);
+      const remainingPermutations = generatePermutations(remainingChars);
+
+      // Prepend the current character to each permutation of the remaining characters
+      for (let permutation of remainingPermutations) {
+          results.push(char + permutation);
+      }
+  }
+
+  return results;
+}
+
+// Example 1: Generate permutations of a 3-character string
+const example1 = "abc";
+const permutations1 = generatePermutations(example1);
+// console.log(permutations1);
+//? Output: ["abc", "acb", "bac", "bca", "cab", "cba"]
+
+// Example 2: Generate permutations of a string with repeating characters
+const example2 = "aab";
+const permutations2 = generatePermutations(example2);
+// console.log(permutations2);
+//? Output: ["aab", "aba", "baa"]
+
+// Example 3: Generate permutations of a single-character string
+const example3 = "x";
+const permutations3 = generatePermutations(example3);
+// console.log(permutations3); 
+//? Output: ["x"]
+
+// Example 4: Generate permutations of an empty string
+const example4 = "";
+const permutations4 = generatePermutations(example4);
+// console.log(permutations4); 
+//? Output: [""]
+
+
+
 
