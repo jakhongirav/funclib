@@ -643,6 +643,13 @@ const permutations4 = generatePermutations(example4);
 // console.log(permutations4); 
 //? Output: [""]
 
+//! Create Hello world function - Higher Order Function
 
+function createHelloWorld() {
+  return function(message) {
+    console.log(message);
+  }
+}
 
-
+const f = createHelloWorld();
+f('Hello World')
