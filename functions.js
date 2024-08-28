@@ -652,4 +652,94 @@ function createHelloWorld() {
 }
 
 const f = createHelloWorld();
-f('Hello World')
+// f('Hello World')
+
+//! JavaScript function that deep clones an object. This function will handle nested objects, arrays, and even special data types like Date and RegExp. Deep cloning is essential when you want to create a completely independent copy of an object, ensuring that changes to the cloned object do not affect the original.
+
+function deepClone(obj, hash = new WeakMap()) {
+  // Handle null, undefined, or non-object values (primitives)
+  if (obj === null || typeof obj !== "object") {
+      return obj;
+  }
+
+  // Handle circular references
+  if (hash.has(obj)) {
+      return hash.get(obj);
+  }
+
+  // Handle Date
+  if (obj instanceof Date) {
+      return new Date(obj);
+  }
+
+  // Handle RegExp
+  if (obj instanceof RegExp) {
+      return new RegExp(obj);
+  }
+
+  // Handle Arrays
+  if (Array.isArray(obj)) {
+      const arrCopy = [];
+      hash.set(obj, arrCopy);
+      for (let i = 0; i < obj.length; i++) {
+          arrCopy[i] = deepClone(obj[i], hash);
+      }
+      return arrCopy;
+  }
+
+  // Handle Objects
+  const objCopy = {};
+  hash.set(obj, objCopy);
+  for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          objCopy[key] = deepClone(obj[key], hash);
+      }
+  }
+  return objCopy;
+}
+
+// Example 1: Deep clone a simple object
+const original1 = {
+  name: "Alice",
+  age: 25,
+  address: { city: "Wonderland", zip: "12345" }
+};
+const clone1 = deepClone(original1);
+clone1.address.city = "New Wonderland";
+// console.log(original1.address.city);
+ //? Output: "Wonderland"
+// console.log(clone1.address.city);
+    //? Output: "New Wonderland"
+
+// Example 2: Deep clone an array with nested objects
+const original2 = [
+  { id: 1, value: "a" },
+  { id: 2, value: "b" },
+  [3, 4, { id: 5, value: "c" }]
+];
+const clone2 = deepClone(original2);
+clone2[2][2].value = "new value";
+// console.log(original2[2][2].value);
+ //? Output: "c"
+// console.log(clone2[2][2].value);
+    //? Output: "new value"
+
+// Example 3: Deep clone an object with circular references
+const original3 = { name: "Bob" };
+original3.self = original3; // Circular reference
+const clone3 = deepClone(original3);
+// console.log(clone3.self === clone3);
+ //? Output: true
+// console.log(clone3.self === original3);
+ //? Output: false
+
+// Example 4: Deep clone an object with Date and RegExp
+const original4 = {
+  date: new Date(),
+  regex: /abc/gi
+};
+const clone4 = deepClone(original4);
+// console.log(clone4.date === original4.date);
+ //? Output: false (different Date objects)
+// console.log(clone4.regex === original4.regex);
+ //? Output: false (different RegExp objects)
