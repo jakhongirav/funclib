@@ -743,3 +743,61 @@ const clone4 = deepClone(original4);
  //? Output: false (different Date objects)
 // console.log(clone4.regex === original4.regex);
  //? Output: false (different RegExp objects)
+
+//!  A function expect that helps developers test their code. It should take in any value val and return an object with the following two functions.
+ const expect = function(val) {
+  return {
+      toBe: function(secVal) {
+          if (val === secVal) {
+              return true;
+          } else {
+              throw new Error("Not Equal");
+          }
+      },
+      notToBe: function(thirdVal) {
+          if (val !== thirdVal) {
+              return true;
+          } else {
+              throw new Error("Equal");
+          }
+      }
+  };
+};
+
+//? Example usage
+//* Case 1: Expect the value to be equal
+try {
+  // console.log(expect(5).toBe(5));
+   //? Output: true
+} catch (e) {
+  // console.log(e.message);
+   //? Won't run because values are equal
+}
+
+//* Case 2: Expect the value to not be equal
+try {
+  // console.log(expect(5).notToBe(3));
+   //? Output: true
+} catch (e) {
+  // console.log(e.message);
+   //? Won't run because values are not equal
+}
+
+//* Case 3: Expect the value to be equal, but it's not
+try {
+  // console.log(expect(5).toBe(3));
+   //? Throws an error: "Not Equal"
+} catch (e) {
+  // console.log(e.message);
+   //? Output: "Not Equal"
+}
+
+//* Case 4: Expect the value to not be equal, but it is
+try {
+  // console.log(expect(5).notToBe(5));
+   //? Throws an error: "Equal"
+} catch (e) {
+  // console.log(e.message);
+   //? Output: "Equal"
+}
+
