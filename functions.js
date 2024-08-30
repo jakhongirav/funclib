@@ -801,3 +801,34 @@ try {
    //? Output: "Equal"
 }
 
+//! Counter function 
+var createCounter = function(init) {
+  let current = init; // Store the current value of the counter
+
+  return {
+      increment: function() {
+          return ++current; // Increment by 1 and return the new value
+      },
+      decrement: function() {
+          return --current; // Decrement by 1 and return the new value
+      },
+      reset: function() {
+          current = init;  // Reset the counter to its initial value
+          return current;
+      }
+  }
+};
+
+//! Usage
+const counter = createCounter(10);
+
+// console.log(counter.increment());
+ // Output: 11
+// console.log(counter.increment());
+ // Output: 12
+// console.log(counter.decrement());
+ // Output: 11
+// console.log(counter.reset()); 
+    // Output: 10
+// console.log(counter.decrement());
+ // Output: 9
