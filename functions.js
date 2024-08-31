@@ -832,3 +832,33 @@ const counter = createCounter(10);
     // Output: 10
 // console.log(counter.decrement());
  // Output: 9
+
+//! This function, map, creates a new array by applying a given function fn to each element of an input array arr. It iterates over the array, applies the function to each element along with its index, and stores the result in a new array. Finally, it returns the new array with the transformed elements.
+
+function map(arr, fn) {
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+      result.push(fn(arr[i], i));
+  }
+  return result;
+}
+
+// Примеры использования:
+
+// Пример 1:
+const arr1 = [1, 2, 3];
+const plusone = function(n) { return n + 1; };
+// console.log(map(arr1, plusone));
+//? [2, 3, 4]
+
+//? Пример 2:
+const arr2 = [1, 2, 3];
+const plusI = function(n, i) { return n + i; };
+// console.log(map(arr2, plusI));
+//? [1, 3, 5]
+
+// Пример 3:
+const arr3 = [10, 20, 30];
+const constant = function() { return 42; };
+// console.log(map(arr3, constant));
+//? [42, 42, 42]
