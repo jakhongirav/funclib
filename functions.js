@@ -862,3 +862,23 @@ const arr3 = [10, 20, 30];
 const constant = function() { return 42; };
 // console.log(map(arr3, constant));
 //? [42, 42, 42]
+
+//! The filter function creates a new array by including only the elements from the input array arr that satisfy a condition defined by the function fn. It iterates over each element in arr, applies fn to it, and if fn returns true, that element is added to the filteredArr. The function then returns filteredArr.
+var filter = function(arr, fn) {
+  let filteredArr = [];
+  for (let i = 0; i < arr.length; i++) {
+      if (fn(arr[i], i)) {
+          filteredArr.push(arr[i]);
+      }
+  }
+  return filteredArr;
+};
+
+//! Usage
+var arrr = [1, 2, 3, 4, 5];
+var isEven = function(n) { return n % 2 === 0; };
+
+var result = filter(arrr, isEven);
+// console.log(result);
+ //? [2, 4]
+
