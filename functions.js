@@ -882,3 +882,26 @@ var result = filter(arrr, isEven);
 // console.log(result);
  //? [2, 4]
 
+
+//! Reduce function using no built in functions
+//? it used 64ms of runtime
+const reduce = function(nums, fn, init) {
+  let val = init;
+  nums.forEach((el,index) => {
+      val = fn(val,el)
+  })
+  return val;
+};
+
+//? Usage example 
+let givenArr = [];
+let fn = function sum(accum, curr) {
+  return 0;
+}
+let init = 25;
+
+// console.log(reduce(givenArr, fn, init));
+
+
+
+
