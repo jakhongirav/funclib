@@ -902,6 +902,27 @@ let init = 25;
 
 // console.log(reduce(givenArr, fn, init));
 
+//! This function, compose, takes an array of functions and returns a new function. When the returned function is called with an argument x, it applies the functions in the array from right to left, passing the result of each function as the input to the next. 
+var compose = functions => x => {
+  //* reduceRight: It processes the functions array starting from the last function, applying each one to the result of the previous function, with the initial value being x.
+  return functions.reduceRight((result, func) => func(result), x);
+};
+
+//? Example usage
+// Define some simple functions
+const add1 = x => x + 1;
+const square = x => x * x;
+const double = x => 2 * x;
+
+// Compose the functions
+const composedFunction = compose([add1, square, double]);
+
+// Apply the composed function to a value
+const result = composedFunction(4);  // First: double(4) => 8, square(8) => 64, add1(64) => 65
+
+// console.log(result); 
+//? Output: 65
+
 
 
 
