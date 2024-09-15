@@ -918,11 +918,22 @@ const double = x => 2 * x;
 const composedFunction = compose([add1, square, double]);
 
 // Apply the composed function to a value
-const result = composedFunction(4);  // First: double(4) => 8, square(8) => 64, add1(64) => 65
+// const result = composedFunction(4); 
+ // First: double(4) => 8, square(8) => 64, add1(64) => 65
 
 // console.log(result); 
 //? Output: 65
 
+//! This function `once(fn)` ensures that a given function `fn` is called only once. On the first invocation, it executes `fn` with the provided arguments and returns the result. Any subsequent calls return `undefined` without invoking `fn` again. This is useful for scenarios where an operation should only happen a single time.
+var once = function(fn) {
+  let called = false, result;
+  return function(...args) {
+    return called ? undefined : (called = true, result = fn(...args));
+  };
+};
 
 
+let lolo = once((a, b, c) => a + b + c);
+const calls = [[5, 7, 4], [2, 3, 6], [4, 6, 8]];
+// console.log(lolo(...calls));
 
