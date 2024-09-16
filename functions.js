@@ -937,3 +937,45 @@ let lolo = once((a, b, c) => a + b + c);
 const calls = [[5, 7, 4], [2, 3, 6], [4, 6, 8]];
 // console.log(lolo(...calls));
 
+//! This memoize function optimizes another function by caching its results to avoid repeated calculations with the same arguments. It works by storing previous results in a Map, using a stringified version of the arguments as the key. If the function is called again with the same arguments, the cached result is returned instead of recalculating. The getCallCount function tracks how many times the original function has been called (i.e., when the result wasn't in the cache).
+function memoize(fn) {
+  let cache = new Map(); // Используем Map для быстрого доступа к кэшированным данным
+  let callCount = 0; // Счетчик вызовов оригинальной функции
+
+  return {
+      memoizedFn: function(...args) {
+          // Генерируем ключ для кэша
+          const key = args.join(',');
+
+          // Если результат уже есть в кэше, возвращаем его
+          if (cache.has(key)) {
+              return cache.get(key);
+          }
+
+          // Если результат отсутствует, вызываем функцию
+          const result = fn(...args);
+          cache.set(key, result); // Сохраняем результат в кэше
+          callCount++; // Увеличиваем счетчик вызовов
+          return result;
+      },
+      getCallCount: function() {
+          return callCount; // Возвращаем количество реальных вызовов функции
+      }
+  };
+}
+
+//? Example usage
+const sum = (a, b) => a + b;
+const memoizedSum = memoize(sum);
+
+// console.log(memoizedSum.memoizedFn(2, 2));
+// 4
+// console.log(memoizedSum.memoizedFn(2, 2));
+// 4 (из кэша)
+// console.log(memoizedSum.getCallCount());
+// 1
+
+// console.log(memoizedSum.memoizedFn(1, 2));
+// 3
+// console.log(memoizedSum.getCallCount());
+// 2
