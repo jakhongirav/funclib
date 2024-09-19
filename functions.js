@@ -990,3 +990,32 @@ var addTwoPromises = async function(promise1, promise2) {
 const promise1 = new Promise(resolve => setTimeout(() => resolve(2), 20))
 const promise2 = new Promise(resolve => setTimeout(() => resolve(5), 60))
 // console.log(addTwoPromises(promise1, promise2));
+
+
+function yandexFormers(N, staff, K) {
+  // Ваш код
+  // return mapped array
+  // return sum of k elemenets
+  const filtered = staff.sort((a, b) => b - a)
+  const res = filtered.slice(0, K);
+  const x = res.reduce((a, c) => a + c)
+  return x 
+  // x - максимальный уровень Яндексформера
+}
+
+// const workers = [15, 4, 0, 8, 7];
+// yandexFormers(workers.length, workers, 4);
+
+var cancellable = function(fn, args, t) {
+  // Устанавливаем таймер на вызов функции fn через t миллисекунд
+  const timeoutId = setTimeout(() => {
+    fn(...args);  // Вызываем fn с аргументами после задержки
+  }, t);
+
+  // Возвращаем функцию отмены, которая может быть вызвана позже
+  return function cancelFn() {
+    clearTimeout(timeoutId);  // Отменяем выполнение fn, если эта функция вызвана
+  };
+};
+
+console.log(cancellable((x) => x*2, [2], 30))
