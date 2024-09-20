@@ -1018,4 +1018,27 @@ var cancellable = function(fn, args, t) {
   };
 };
 
-console.log(cancellable((x) => x*2, [2], 30))
+// console.log(cancellable((x) => x*2, [2], 30))
+
+//! Function using setInterval and clearInterval
+var cancellable = function(fn, args, t) {
+  // Сразу вызываем функцию fn с аргументами
+  fn(...args);
+  
+  // Устанавливаем интервал для вызова функции каждые t миллисекунд
+  let intervalId = setInterval(() => {
+      fn(...args);
+  }, t);
+
+  // Возвращаем функцию cancelFn, которая будет вызываться через cancelTimeMs миллисекунд
+  return function cancelFn() {
+      clearInterval(intervalId);
+  };
+};
+
+// Пример использования
+const cancelFn = cancellable((x) => console.log(x * 2), [4], 35);
+setTimeout(cancelFn, 190); // Отменяем через 190 миллисекунд
+
+
+
