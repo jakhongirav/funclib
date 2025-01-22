@@ -26,5 +26,5 @@ func minimumSum(_ num: Int) -> Int {
 }
 
 //? Example usage
-// print(minimumSum(4325))  // Output: 59
+print(minimumSum(4325))  // Output: 59
 // print(minimumSum(687))  // Output: 75
